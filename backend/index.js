@@ -13,7 +13,7 @@ configDotenv();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin:'http://localhost:5173',
+  origin:'https://chatting-app-tawny-three.vercel.app',
   methods: 'GET,POST,PUT,DELETE', // Allowed HTTP methods
   credentials:true,
 }));
@@ -24,7 +24,7 @@ const httpserver = createServer(app);
 //implementing socket.io 
 const io = new Server(httpserver,{
     cors : {
-        origin:'http://localhost:5173',
+        origin:'https://chatting-app-tawny-three.vercel.app',
         methods:['GET','POST'],
         credentials:true,
     }
@@ -46,8 +46,10 @@ app.get('/',(req,res)=>{
 // making routes here 
 app.use('/',UserRouter);
 
-httpserver.listen(process.env.PORT,()=>{
-    console.log('App listening on PORT',process.env.PORT);
+const PORT = process.env.PORT || 3000;
+
+httpserver.listen(PORT,()=>{
+    console.log('App listening on PORT',PORT);
 })
 const userSocketMap = new Map();
 
