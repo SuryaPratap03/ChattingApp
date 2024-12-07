@@ -468,7 +468,7 @@ const handleDownload = async (url, name) => {
                               >
                                 View File
                               </a>
-                              <div
+{/*                               <div
                                 onClick={() =>
                                   handleDownload(
                                     msg?.data?.attachment,
@@ -478,7 +478,7 @@ const handleDownload = async (url, name) => {
                                 className="cursor-pointer text-blue-200 underline"
                                 >
                                 <IoMdDownload className=" text-black text-3xl" />
-                              </div>
+                              </div> */}
                                 </div>
                             )}
 
