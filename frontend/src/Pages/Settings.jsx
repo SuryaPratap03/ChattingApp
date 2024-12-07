@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'; // Importing Toastify CSS
 
 const Settings = () => {
   const [currUser, setCurrUser] = useState({
-    username: '',
+    name: '',
     userId: '',
     profile_pic: '',
   });
@@ -30,7 +30,7 @@ const Settings = () => {
       const data = await response.json();
       setCurrUser({
         userId: data?.user?._id,
-        username: data?.user?.name,
+        name: data?.user?.name,
         profile_pic: data?.user?.profile_pic,
       });
     } catch (error) {
@@ -46,9 +46,10 @@ const Settings = () => {
   const handleChange = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-
+    console.log('currUser',currUser.name);
+    
     const { name, value, files } = e.target;
-
+  
     if (name === 'profile_pic') {
       setLoading(true); // Start loading
       const pp = await uploadFile(files[0]);
@@ -57,13 +58,15 @@ const Settings = () => {
         [name]: pp?.url,
       }));
       setLoading(false); // End loading
-    } else {
+    } else if (name === 'name') {
+      // Explicitly update the name field
       setCurrUser((prev) => ({
         ...prev,
-        [name]: value,
+        name: value, // Ensure the value is being set correctly
       }));
     }
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -76,7 +79,7 @@ const Settings = () => {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify(currUser), // Convert the object to a JSON string
+        body: JSON.stringify(currUser),  // Convert the object to a JSON string
       });
 
       const data = await response.json();
@@ -108,11 +111,11 @@ const Settings = () => {
           </div>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700">Username</label>
+              <label className="block text-sm font-medium text-gray-700">name</label>
               <input
                 type="text"
-                name="username"
-                value={currUser.username}
+                name="name"
+                value={currUser.name}
                 onChange={handleChange}
                 placeholder="Enter your name"
                 required
