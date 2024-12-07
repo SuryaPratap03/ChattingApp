@@ -359,7 +359,7 @@ const renderAttachmentPreview = () => {
           {selectedUser && (
             <div className="flex items-center p-4 border-b">
 {window.innerWidth < 768 && (
-  <a
+  <button
     onClick={()=>navigate('/chat')}
 {/*     href={`${import.meta.env.VITE_Frontend_Url }/chat`} */}
     className="text-blue-500 text-3xl font-bold hover:text-blue-700 transition-all m-2"
