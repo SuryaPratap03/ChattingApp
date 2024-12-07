@@ -24,7 +24,7 @@ const Login = () => {
     e.stopPropagation();
     console.log(data);
     try {
-      const response = await fetch(`${import.meta.env.VITE_Backend_Url}/login`, {
+      const response = await fetch(`${import.meta.env.VITE_Backend_Url}/login`,{
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -33,7 +33,7 @@ const Login = () => {
         credentials: "include",
       });
       const data2 = await response.json();
-      console.log(data2);
+      console.log('data2',data2);
 
       if (response.ok) {
         toast.success("Login successful! Redirecting...", { position: "top-right" });  // Success message
