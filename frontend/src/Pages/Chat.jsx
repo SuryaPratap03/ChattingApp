@@ -246,43 +246,37 @@ const renderAttachmentPreview = () => {
     // console.log("User registered with ID:", curruser.userId);
   };
 
-  const handleDownload = async (url, name) => {
-    try {
-      // Fetch the file from the URL
-      const response = await fetch(url, {
-        method: "GET",
-      });
+const handleDownload = async (url, name) => {
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/octet-stream", // Indicate you're downloading a file
+        "Access-Control-Allow-Origin": "*", // Allow cross-origin access
+      },
+    });
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch the file");
-      }
-
-      // Convert the response to a Blob
-      const blob = await response.blob();
-
-      // Create a temporary anchor element
-      const link = document.createElement("a");
-
-      // Create a URL for the Blob and set it as the href attribute
-      const fileURL = URL.createObjectURL(blob);
-      link.href = fileURL;
-
-      // Set the download attribute with a default or custom filename
-      link.download = name; // You can customize the file name
-
-      // Append the anchor to the document body
-      document.body.appendChild(link);
-
-      // Trigger a click on the anchor to start the download
-      link.click();
-
-      // Clean up: Remove the anchor and revoke the Blob URL
-      document.body.removeChild(link);
-      URL.revokeObjectURL(fileURL);
-    } catch (error) {
-      console.error("Error downloading the file:", error);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch file: ${response.status}`);
     }
-  };
+
+    const blob = await response.blob();
+    const link = document.createElement("a");
+    const fileURL = URL.createObjectURL(blob);
+
+    link.href = fileURL;
+    link.download = name;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    URL.revokeObjectURL(fileURL);
+  } catch (error) {
+    console.error("Error downloading file:", error);
+  }
+};
+
+  
   const handleSelectedUser =(contact)=>{
     setAllMessages([])
     setSelectedUser(contact);
