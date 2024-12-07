@@ -84,8 +84,12 @@ const Chat = () => {
         }
       );
       if(!response.ok){
+        console.log('response',response);
+        
         navigate('/login');
       }
+      console.log('response',response);
+
       const data = await response.json();
       // console.log('Backend Data of user',data.user);
       
