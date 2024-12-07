@@ -13,7 +13,7 @@ configDotenv();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin:'https://chatting-app-tawny-three.vercel.app',
+  origin:`${process.env.FRONTEND_URL}`,
   methods: 'GET,POST,PUT,DELETE', // Allowed HTTP methods
   credentials:true,
 }));
@@ -24,7 +24,7 @@ const httpserver = createServer(app);
 //implementing socket.io 
 const io = new Server(httpserver,{
     cors : {
-        origin:'https://chatting-app-tawny-three.vercel.app',
+        origin:`${process.env.FRONTEND_URL}`,
         methods:['GET','POST'],
         credentials:true,
     }

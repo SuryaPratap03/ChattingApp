@@ -66,7 +66,7 @@ const Chat = () => {
       setContacts(data);
       setLoading(false);
     } catch (error) {
-      console.log("Problem in Get all users", error);
+      // console.log("Problem in Get all users", error);
       setLoading(false);
     }
   };
@@ -87,13 +87,13 @@ const Chat = () => {
         navigate('/login');
       }
       const data = await response.json();
-      console.log('Backend Data of user',data.user);
+      // console.log('Backend Data of user',data.user);
       
-      console.log(
-        data?.user?._id,
-        data?.user?.name,
-        data?.user?.profile_pic
-      );
+      // console.log(
+      //   data?.user?._id,
+      //   data?.user?.name,
+      //   data?.user?.profile_pic
+      // );
       dispatch(
         addUserDetails({
           userId: data?.user?._id,
@@ -106,7 +106,7 @@ const Chat = () => {
     }
   };
   useEffect(() => {
-    console.log(curruser);
+    // console.log(curruser);
   }, [curruser]);
   useEffect(() => {
     getallUsers();
@@ -178,13 +178,13 @@ const renderAttachmentPreview = () => {
   //handling socket.io here
   const socketRef = useRef(null);
   useEffect(() => {
-    socketRef.current = io("http://localhost:3000", {
+    socketRef.current = io(`${import.meta.env.VITE_Backend_Url}`, {
       withCredentials: true,
       transports: ["websocket"],
     });
 
     socketRef.current.on("connect", () => {
-      console.log("Connected to the server", socketRef.current.id);
+      // console.log("Connected to the server", socketRef.current.id);
     });
 
     socketRef.current.on("receivedMessage", (msg) => {
@@ -195,7 +195,7 @@ const renderAttachmentPreview = () => {
 
     socketRef.current.on('allprevMessages',async(msgs)=>{
       const prevMessages = await JSON.parse(msgs);
-      console.log('prevMessages he ye to ',prevMessages);
+      // console.log('prevMessages he ye to ',prevMessages);
       
       setAllMessages([
         ...prevMessages
@@ -208,13 +208,13 @@ const renderAttachmentPreview = () => {
   }, []);
 
   useEffect(() => {
-    console.log('saare messages ',allMessages);
+    // console.log('saare messages ',allMessages);
   }, [allMessages]);
 
   const handleSend = async () => {
     if (data.attachment || data.text) {
-      console.log("sender", curruser.userId);
-      console.log("receiver", selectedUser?._id);
+      // console.log("sender", curruser.userId);
+      // console.log("receiver", selectedUser?._id);
       const body = {
         data: data,
         senderId: curruser?.userId,
@@ -239,7 +239,7 @@ const renderAttachmentPreview = () => {
 
   const registerUser = () => {
     socketRef.current.emit("register", JSON.stringify(curruser?.userId));
-    console.log("User registered with ID:", curruser.userId);
+    // console.log("User registered with ID:", curruser.userId);
   };
 
   const handleDownload = async (url, name) => {
@@ -284,7 +284,7 @@ const renderAttachmentPreview = () => {
     setSelectedUser(contact);
     
     socketRef.current.emit('getAllMessagesFromConversation',JSON.stringify({senderId:curruser.userId,receiverId:contact._id}))
-    console.log('Sending payload to Server',JSON.stringify({senderId:curruser.userId,receiverId:contact._id}));
+    // console.log('Sending payload to Server',JSON.stringify({senderId:curruser.userId,receiverId:contact._id}));
   }
   const handleLogout = async () => {
     try {
@@ -304,7 +304,7 @@ const renderAttachmentPreview = () => {
         toast.error(`Error: ${data.message || 'Logout failed!'}`);
       }
     } catch (error) {
-      console.log('Error while logging out:', error);
+      // console.log('Error while logging out:', error);
       // Show error toast in case of network or other issues
       toast.error('Error while logging out. Please try again later.');
     }
@@ -356,7 +356,7 @@ const renderAttachmentPreview = () => {
             <div className="flex items-center p-4 border-b">
 {window.innerWidth < 768 && (
   <a
-    href="http://localhost:5173/chat"
+    href={`${import.meta.env.VITE_Frontend_Url }/chat`}
     className="text-blue-500 text-3xl font-bold hover:text-blue-700 transition-all m-2"
   >
     {`<`}
