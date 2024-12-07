@@ -359,8 +359,7 @@ const renderAttachmentPreview = () => {
           {selectedUser && (
             <div className="flex items-center p-4 border-b">
 {window.innerWidth < 768 && (
-  <a
-    href="/chat"
+  <button
     onClick={(e) => {
       e.preventDefault();
       navigate('/chat');
@@ -368,7 +367,7 @@ const renderAttachmentPreview = () => {
     className="text-blue-500 text-3xl font-bold hover:text-blue-700 transition-all m-2"
   >
     {"<"}
-  </a>
+  </button>
 )}             <img
                 src={selectedUser?.profile_pic}
                 alt="Profile"
